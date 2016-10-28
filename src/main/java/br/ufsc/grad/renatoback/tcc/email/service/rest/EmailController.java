@@ -12,12 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
 	@Autowired
-	EmailService emailService;
+	EmailService service;
 
 	@RequestMapping(path = "/{time}", method = RequestMethod.POST)
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void send(@PathVariable("time") Long time) {
-		emailService.sendEmail(time);
+		service.sendEmail(time);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	@ResponseStatus(code = HttpStatus.OK)
+	public void resetStatistics() {
+		service.resetStatistics();
+	}
+
+	@RequestMapping(method = RequestMethod.PUT)
+	@ResponseStatus(code = HttpStatus.OK)
+	public void printStatistics() {
+		service.printStatistics();
 	}
 
 }
