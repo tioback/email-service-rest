@@ -1,5 +1,6 @@
 package br.ufsc.grad.renatoback.tcc.email.service.rest;
 
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -17,11 +18,11 @@ public class EmailService {
 
 	public void sendEmail(Long time) {
 		counter.incrementAndGet();
-		average.accumulateAndGet(System.nanoTime() - time, (n, m) -> (n + m) / (n == 0 || m == 0 ? 1 : 2));
+		average.accumulateAndGet(new Date().getTime() - time, (n, m) -> (n + m) / (n == 0 || m == 0 ? 1 : 2));
 	}
 
 	public void printStatistics(Integer threads, Integer sleep) {
-		logger.info(String.format("EMAIL [%d threads][%d sleep] - [%d packages][%d average ns]", threads, sleep,
+		logger.info(String.format("EMAIL [%d threads][%d sleep] - [%d packages][%d average ms]", threads, sleep,
 				counter.get(), average.get()));
 	}
 
